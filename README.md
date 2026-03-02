@@ -65,6 +65,8 @@ npm run build
 npm run preview
 ```
 
+**Despliegue en GitHub Pages:** Hay un workflow en `.github/workflows/deploy-pages.yml` que hace `npm run build` y publica la carpeta **dist** (no el código fuente). Así se evita el 404 en `main.tsx`. **Configuración necesaria:** en el repo, **Settings → Pages → Build and deployment → Source** debe estar en **"GitHub Actions"** (no en "Deploy from a branch"). Tras el primer push a `main`, el workflow construye y despliega; la URL será `https://<usuario>.github.io/gameLibrary/`. El login con Steam no funcionará en esa URL (no hay backend); el resto de la app (añadir juegos manualmente, listados, búsqueda, etc.) sí.
+
 ---
 
 ## Integración con Steam

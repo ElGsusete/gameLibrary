@@ -1,10 +1,30 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { copyFileSync, existsSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  // Base relativa para que funcione en GitHub Pages (https://user.github.io/repo/)
+  base: './',
+  plugins: [
+    react(),
+    tailwindcss(),
+    // En GitHub Pages no hay SPA fallback: copiar index.html a 404.html para que las rutas funcionen
+    {
+      name: 'copy-404',
+      closeBundle() {
+        const out = resolve(__dirname, 'dist')
+        const index = resolve(out, 'index.html')
+        const fallback = resolve(out, '404.html')
+        if (existsSync(index)) copyFileSync(index, fallback)
+      },
+    },
+  ],
   server: {
     proxy: {
       '/api': {

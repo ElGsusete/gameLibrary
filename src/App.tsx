@@ -11,10 +11,19 @@ import { TopGamesPage } from './pages/TopGamesPage'
 import { MySteamGamesPage } from './pages/MySteamGamesPage'
 import { AuthCallbackPage } from './pages/AuthCallbackPage'
 
+// En GitHub Pages la app puede estar en /repo-name/; el router necesita ese basename
+function getBasename(): string {
+  if (import.meta.env.DEV) return '/'
+  const path = window.location.pathname
+  const segments = path.split('/').filter(Boolean)
+  if (segments.length === 0) return '/'
+  return '/' + segments[0] + '/'
+}
+
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter basename={getBasename()}>
         <AuthProvider>
           <GamesProvider>
             <Routes>
