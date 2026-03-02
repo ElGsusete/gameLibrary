@@ -3,7 +3,7 @@ import { Gamepad2, Home, ListPlus, LayoutGrid, Trophy } from 'lucide-react'
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <Link
           to="/"
