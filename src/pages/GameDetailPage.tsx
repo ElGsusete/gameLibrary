@@ -47,7 +47,7 @@ export function GameDetailPage() {
 
   if (!game) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-12 text-center">
+      <div className="mx-auto w-full max-w-4xl px-4 py-12 text-center">
         <p className="text-zinc-400">Juego no encontrado.</p>
         <button
           onClick={() => navigate('/games')}
@@ -60,7 +60,7 @@ export function GameDetailPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto w-full max-w-4xl px-4 py-8">
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="shrink-0">
           <div className="aspect-[3/4] w-56 overflow-hidden rounded-lg bg-zinc-800 relative">

@@ -10,6 +10,27 @@ import {
 
 const DEBOUNCE_MS = 350
 const MIN_QUERY_LENGTH = 2
+const STEAM_HEADER_URL = (appid: number) =>
+  `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`
+
+function SteamResultThumb({ appid }: { appid: number }) {
+  const [imgError, setImgError] = useState(false)
+  if (imgError) {
+    return (
+      <div className="h-12 w-[92px] shrink-0 rounded bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500">
+        Sin img
+      </div>
+    )
+  }
+  return (
+    <img
+      src={STEAM_HEADER_URL(appid)}
+      alt=""
+      className="h-12 w-[92px] shrink-0 rounded object-cover"
+      onError={() => setImgError(true)}
+    />
+  )
+}
 
 export function AddFromSteam() {
   const [query, setQuery] = useState('')
@@ -126,7 +147,7 @@ export function AddFromSteam() {
   )
 
   return (
-    <div className="mx-auto max-w-xl space-y-4 rounded-xl border border-zinc-700 bg-zinc-800/50 p-6">
+    <div className="mx-auto w-full max-w-xl space-y-4 rounded-xl border border-zinc-700 bg-zinc-800/50 p-6">
       <h2 className="text-lg font-semibold text-white">Importar desde Steam</h2>
       <p className="text-sm text-zinc-400">
         Escribe al menos {MIN_QUERY_LENGTH} caracteres; la búsqueda se actualiza al dejar de escribir. La primera vez puede tardar (se descarga la lista de Steam).
@@ -146,17 +167,18 @@ export function AddFromSteam() {
         <p className="text-sm text-red-400">{error}</p>
       )}
       {results.length > 0 && (
-        <ul className="max-h-72 space-y-1 overflow-y-auto rounded-lg border border-zinc-700 bg-zinc-900 p-2">
+        <ul className="max-h-96 space-y-2 overflow-y-auto rounded-lg border border-zinc-700 bg-zinc-900 p-2">
           {results.map((app) => (
             <li key={app.appid}>
               <button
                 type="button"
                 onClick={() => handleSelect(app)}
                 disabled={detailLoading === app.appid}
-                className="w-full rounded px-2 py-2 text-left text-sm text-white hover:bg-zinc-700 disabled:opacity-50"
+                className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-white hover:bg-zinc-700 disabled:opacity-50"
               >
-                {detailLoading === app.appid ? 'Cargando…' : app.name}
-                <span className="ml-2 text-zinc-500">({app.appid})</span>
+                <SteamResultThumb appid={app.appid} />
+                <span className="min-w-0 flex-1 truncate font-medium">{app.name}</span>
+                <span className="shrink-0 text-zinc-500">({app.appid})</span>
               </button>
             </li>
           ))}

@@ -15,7 +15,7 @@ export function HomePage() {
     .slice(0, 10)
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto w-full max-w-6xl px-4 py-8">
       <section className="mb-12 text-center">
         <h1 className="text-4xl font-bold text-white md:text-5xl">
           Tu lista de juegos

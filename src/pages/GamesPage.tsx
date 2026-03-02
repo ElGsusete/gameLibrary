@@ -30,8 +30,8 @@ export function GamesPage() {
   }, [gamesWithScores, platformFilter, sortBy])
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold text-white">Todos los juegos</h1>
+    <div className="mx-auto w-full max-w-6xl px-4 py-8">
+      <h1 className="mb-6 text-center text-3xl font-bold text-white">Todos los juegos</h1>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
         <div>

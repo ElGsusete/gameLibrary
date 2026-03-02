@@ -19,13 +19,15 @@ export function AddGamePage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="mb-8 text-3xl font-bold text-white">Añadir juego</h1>
-      <div className="mb-10">
+    <div className="mx-auto w-full max-w-3xl px-4 py-8">
+      <h1 className="mb-8 text-center text-3xl font-bold text-white">Añadir juego</h1>
+      <div className="mb-10 flex justify-center">
         <AddFromSteam />
       </div>
-      <h2 className="mb-4 text-xl font-semibold text-zinc-300">Añadir manualmente</h2>
-      <AddGameForm onSubmit={handleSubmit} />
+      <h2 className="mb-4 text-center text-xl font-semibold text-zinc-300">Añadir manualmente</h2>
+      <div className="flex justify-center">
+        <AddGameForm onSubmit={handleSubmit} />
+      </div>
     </div>
   )
 }
