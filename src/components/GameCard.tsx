@@ -20,17 +20,27 @@ export function GameCard({ game }: { game: GameWithScores }) {
     >
       <div className="aspect-[3/4] bg-zinc-800 relative overflow-hidden">
         {game.coverImage ? (
-          <img
-            src={game.coverImage}
-            alt=""
-            className="h-full w-full object-cover transition-transform group-hover:scale-105"
-          />
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center scale-110"
+              style={{
+                backgroundImage: `url(${game.coverImage})`,
+                filter: 'blur(14px)',
+              }}
+              aria-hidden
+            />
+            <img
+              src={game.coverImage}
+              alt=""
+              className="relative z-10 h-full w-full object-contain transition-transform group-hover:scale-105"
+            />
+          </>
         ) : (
           <div className="h-full w-full flex items-center justify-center text-zinc-500 text-4xl">
             ?
           </div>
         )}
-        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-0.5">
+        <div className="absolute bottom-2 left-2 right-2 z-20 flex items-center justify-between gap-0.5">
           {game.averageScore != null && (
             <span className="flex items-center gap-1 rounded bg-black/70 px-2 py-1 text-amber-400">
               <StarRatingDisplay score={game.averageScore} size="sm" />

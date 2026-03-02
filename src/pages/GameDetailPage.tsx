@@ -63,13 +63,23 @@ export function GameDetailPage() {
     <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="shrink-0">
-          <div className="aspect-[3/4] w-56 overflow-hidden rounded-lg bg-zinc-800">
+          <div className="aspect-[3/4] w-56 overflow-hidden rounded-lg bg-zinc-800 relative">
             {game.coverImage ? (
-              <img
-                src={game.coverImage}
-                alt=""
-                className="h-full w-full object-cover"
-              />
+              <>
+                <div
+                  className="absolute inset-0 bg-cover bg-center scale-110"
+                  style={{
+                    backgroundImage: `url(${game.coverImage})`,
+                    filter: 'blur(14px)',
+                  }}
+                  aria-hidden
+                />
+                <img
+                  src={game.coverImage}
+                  alt=""
+                  className="relative z-10 h-full w-full object-contain"
+                />
+              </>
             ) : (
               <div className="flex h-full w-full items-center justify-center text-4xl text-zinc-500">
                 ?
