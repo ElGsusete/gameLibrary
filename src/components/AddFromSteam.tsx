@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
 import {
@@ -8,34 +8,83 @@ import {
   type SteamAppListItem,
 } from '../services/steamApi'
 
+const DEBOUNCE_MS = 350
+const MIN_QUERY_LENGTH = 2
+
 export function AddFromSteam() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SteamAppListItem[]>([])
   const [loading, setLoading] = useState(false)
   const [detailLoading, setDetailLoading] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const searchIdRef = useRef(0)
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { addGame, getGameById } = useGames()
   const navigate = useNavigate()
 
-  const runSearch = useCallback(async () => {
-    if (!query.trim()) {
+  const runSearch = useCallback(async (searchQuery: string, currentId: number) => {
+    const q = searchQuery.trim()
+    if (q.length < MIN_QUERY_LENGTH) {
       setResults([])
+      setLoading(false)
       return
     }
     setError(null)
     setLoading(true)
     try {
-      const list = await searchSteamApps(query.trim(), 25)
-      setResults(list)
+      const list = await searchSteamApps(q, 25)
+      if (currentId === searchIdRef.current) {
+        setResults(list)
+      }
     } catch (e) {
-      setError(
-        e instanceof Error ? e.message : 'Error al buscar en Steam. ¿Tienes el servidor de desarrollo en marcha (npm run dev)?'
-      )
-      setResults([])
+      if (currentId === searchIdRef.current) {
+        setError(
+          e instanceof Error ? e.message : 'Error al buscar en Steam. ¿Tienes el servidor de desarrollo en marcha (npm run dev)?'
+        )
+        setResults([])
+      }
     } finally {
-      setLoading(false)
+      if (currentId === searchIdRef.current) {
+        setLoading(false)
+      }
     }
-  }, [query])
+  }, [])
+
+  useEffect(() => {
+    if (query.trim().length < MIN_QUERY_LENGTH) {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current)
+        debounceTimerRef.current = null
+      }
+      setResults([])
+      setLoading(false)
+      setError(null)
+      return
+    }
+    const id = ++searchIdRef.current
+    debounceTimerRef.current = setTimeout(() => {
+      debounceTimerRef.current = null
+      runSearch(query, id)
+    }, DEBOUNCE_MS)
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current)
+        debounceTimerRef.current = null
+      }
+    }
+  }, [query, runSearch])
+
+  const runSearchNow = useCallback(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+      debounceTimerRef.current = null
+    }
+    const q = query.trim()
+    if (q.length >= MIN_QUERY_LENGTH) {
+      const id = ++searchIdRef.current
+      runSearch(q, id)
+    }
+  }, [query, runSearch])
 
   const handleSelect = useCallback(
     async (app: SteamAppListItem) => {
@@ -80,26 +129,19 @@ export function AddFromSteam() {
     <div className="mx-auto max-w-xl space-y-4 rounded-xl border border-zinc-700 bg-zinc-800/50 p-6">
       <h2 className="text-lg font-semibold text-white">Importar desde Steam</h2>
       <p className="text-sm text-zinc-400">
-        Busca por nombre y añade el juego a tu biblioteca. La primera búsqueda puede tardar (se descarga la lista de Steam).
+        Escribe al menos {MIN_QUERY_LENGTH} caracteres; la búsqueda se actualiza al dejar de escribir. La primera vez puede tardar (se descarga la lista de Steam).
       </p>
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && runSearch()}
-          placeholder="Nombre del juego en Steam"
-          className="flex-1 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
-        />
-        <button
-          type="button"
-          onClick={runSearch}
-          disabled={loading}
-          className="rounded-lg bg-amber-500 px-4 py-2 font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-50"
-        >
-          {loading ? 'Buscando…' : 'Buscar'}
-        </button>
-      </div>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && runSearchNow()}
+        placeholder="Nombre del juego en Steam"
+        className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+      />
+      {loading && (
+        <p className="text-sm text-zinc-500">Buscando…</p>
+      )}
       {error && (
         <p className="text-sm text-red-400">{error}</p>
       )}
