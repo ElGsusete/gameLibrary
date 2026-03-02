@@ -1,6 +1,6 @@
 # GameLog
 
-Biblioteca personal de videojuegos: registra tus juegos, puntúalos y consulta los mejor valorados. Inspirado en la idea de Letterboxd pero para videojuegos.
+Biblioteca personal de videojuegos: registra tus juegos, puntúalos y consulta los mejor valorados. Inspirado en la idea de Letterboxd pero para videojuegos :D.
 
 Construido con **React**, **TypeScript** y **Vite**. Los datos se guardan en **localStorage**. Opcionalmente puedes **iniciar sesión con Steam** (backend Express) para ver **Mis juegos de Steam**.
 
