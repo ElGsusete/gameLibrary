@@ -29,9 +29,11 @@ export type GamesContextValue = {
   games: Game[]
   ratings: Rating[]
   gamesWithScores: (Game & { averageScore: number | null; ratingCount: number })[]
-  addGame: (game: Omit<Game, 'id' | 'addedAt'>) => string
+  addGame: (game: Omit<Game, 'id' | 'addedAt'> & { id?: string }) => string
   addRating: (rating: Omit<Rating, 'id' | 'ratedAt'>) => void
+  updateRating: (ratingId: string, data: { score: number; comment?: string }) => void
   getRatingsForGame: (gameId: string) => Rating[]
+  getMyRatingForGame: (gameId: string) => Rating | null
   getAverageScore: (gameId: string) => number | null
   getGameById: (id: string) => Game | null
 }
@@ -46,10 +48,10 @@ export function GamesProvider({ children }: { children: React.ReactNode }) {
     loadFromStorage(STORAGE_KEYS.ratings, mockRatings)
   )
 
-  const addGame = useCallback((game: Omit<Game, 'id' | 'addedAt'>) => {
+  const addGame = useCallback((game: Omit<Game, 'id' | 'addedAt'> & { id?: string }) => {
     const newGame: Game = {
       ...game,
-      id: crypto.randomUUID(),
+      id: game.id ?? crypto.randomUUID(),
       addedAt: new Date().toISOString(),
     }
     setGames((prev) => {
@@ -61,13 +63,27 @@ export function GamesProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const addRating = useCallback((rating: Omit<Rating, 'id' | 'ratedAt'>) => {
-    const newRating: Rating = {
-      ...rating,
-      id: crypto.randomUUID(),
-      ratedAt: new Date().toISOString(),
-    }
     setRatings((prev) => {
-      const next = [...prev, newRating]
+      const existing = prev.find((r) => r.gameId === rating.gameId)
+      const now = new Date().toISOString()
+      const next = existing
+        ? prev.map((r) =>
+            r.gameId === rating.gameId
+              ? { ...r, score: rating.score, comment: rating.comment, ratedAt: now }
+              : r
+          )
+        : [...prev, { ...rating, id: crypto.randomUUID(), ratedAt: now }]
+      saveToStorage(STORAGE_KEYS.ratings, next)
+      return next
+    })
+  }, [])
+
+  const updateRating = useCallback((ratingId: string, data: { score: number; comment?: string }) => {
+    const now = new Date().toISOString()
+    setRatings((prev) => {
+      const next = prev.map((r) =>
+        r.id === ratingId ? { ...r, ...data, ratedAt: now } : r
+      )
       saveToStorage(STORAGE_KEYS.ratings, next)
       return next
     })
@@ -93,6 +109,11 @@ export function GamesProvider({ children }: { children: React.ReactNode }) {
     [games]
   )
 
+  const getMyRatingForGame = useCallback(
+    (gameId: string) => ratings.find((r) => r.gameId === gameId) ?? null,
+    [ratings]
+  )
+
   const gamesWithScores = useMemo(() => {
     return games.map((game) => ({
       ...game,
@@ -108,9 +129,11 @@ export function GamesProvider({ children }: { children: React.ReactNode }) {
       gamesWithScores,
       addGame,
       addRating,
+      updateRating,
       getRatingsForGame,
       getAverageScore,
       getGameById,
+      getMyRatingForGame,
     }),
     [
       games,
@@ -118,9 +141,11 @@ export function GamesProvider({ children }: { children: React.ReactNode }) {
       gamesWithScores,
       addGame,
       addRating,
+      updateRating,
       getRatingsForGame,
       getAverageScore,
       getGameById,
+      getMyRatingForGame,
     ]
   )
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Gamepad2, Home, ListPlus, LayoutGrid } from 'lucide-react'
+import { Gamepad2, Home, ListPlus, LayoutGrid, Trophy } from 'lucide-react'
 
 export function Header() {
   return (
@@ -26,6 +26,13 @@ export function Header() {
           >
             <LayoutGrid className="h-4 w-4" />
             Juegos
+          </Link>
+          <Link
+            to="/top"
+            className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white"
+          >
+            <Trophy className="h-4 w-4" />
+            Mejores
           </Link>
           <Link
             to="/add-game"

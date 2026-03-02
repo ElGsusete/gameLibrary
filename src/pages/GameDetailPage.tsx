@@ -7,13 +7,14 @@ import { formatDate } from '../lib/utils'
 export function GameDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { getGameById, getRatingsForGame, getAverageScore, addRating } = useGames()
+  const { getGameById, getRatingsForGame, getAverageScore, getMyRatingForGame, addRating, updateRating } = useGames()
   const [score, setScore] = useState(0)
   const [comment, setComment] = useState('')
   const [showForm, setShowForm] = useState(false)
 
   const game = id ? getGameById(id) : null
   const ratings = id ? getRatingsForGame(id) : []
+  const myRating = id ? getMyRatingForGame(id) : null
   const averageScore = id ? getAverageScore(id) : null
 
   const sortedRatings = [...ratings].sort(
@@ -23,10 +24,25 @@ export function GameDetailPage() {
   const handleSubmitRating = (e: React.FormEvent) => {
     e.preventDefault()
     if (!id || score < 1) return
-    addRating({ gameId: id, score, comment: comment || undefined })
+    if (myRating) {
+      updateRating(myRating.id, { score, comment: comment || undefined })
+    } else {
+      addRating({ gameId: id, score, comment: comment || undefined })
+    }
     setScore(0)
     setComment('')
     setShowForm(false)
+  }
+
+  const handleOpenForm = () => {
+    if (myRating) {
+      setScore(myRating.score)
+      setComment(myRating.comment ?? '')
+    } else {
+      setScore(0)
+      setComment('')
+    }
+    setShowForm(true)
   }
 
   if (!game) {
@@ -91,10 +107,10 @@ export function GameDetailPage() {
             <p className="mt-4 text-zinc-300">{game.description}</p>
           )}
           <button
-            onClick={() => setShowForm((v) => !v)}
+            onClick={() => (showForm ? setShowForm(false) : handleOpenForm())}
             className="mt-6 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400"
           >
-            {showForm ? 'Cancelar' : 'Añadir mi valoración'}
+            {showForm ? 'Cancelar' : myRating ? 'Modificar mi valoración' : 'Añadir mi valoración'}
           </button>
         </div>
       </div>
@@ -123,7 +139,7 @@ export function GameDetailPage() {
             disabled={score < 1}
             className="mt-4 rounded-lg bg-amber-500 px-4 py-2 font-medium text-zinc-950 disabled:opacity-50 hover:bg-amber-400"
           >
-            Enviar valoración
+            {myRating ? 'Guardar cambios' : 'Enviar valoración'}
           </button>
         </form>
       )}

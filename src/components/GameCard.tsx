@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom'
-import { StarRatingDisplay } from './ui/StarRating'
+import { Link } from "react-router-dom";
+import { StarRatingDisplay } from "./ui/StarRating";
 
 type GameWithScores = {
-  id: string
-  title: string
-  year?: number
-  coverImage?: string
-  platform?: string[]
-  addedAt: string
-  averageScore: number | null
-  ratingCount: number
-}
+  id: string;
+  title: string;
+  year?: number;
+  coverImage?: string;
+  platform?: string[];
+  addedAt: string;
+  averageScore: number | null;
+  ratingCount: number;
+};
 
 export function GameCard({ game }: { game: GameWithScores }) {
   return (
@@ -30,16 +30,11 @@ export function GameCard({ game }: { game: GameWithScores }) {
             ?
           </div>
         )}
-        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-0.5">
           {game.averageScore != null && (
             <span className="flex items-center gap-1 rounded bg-black/70 px-2 py-1 text-amber-400">
               <StarRatingDisplay score={game.averageScore} size="sm" />
               <span className="text-sm font-medium">{game.averageScore}</span>
-            </span>
-          )}
-          {game.ratingCount > 0 && (
-            <span className="rounded bg-black/70 px-2 py-1 text-xs text-zinc-400">
-              {game.ratingCount} valoración{game.ratingCount !== 1 ? 'es' : ''}
             </span>
           )}
         </div>
@@ -53,5 +48,5 @@ export function GameCard({ game }: { game: GameWithScores }) {
         )}
       </div>
     </Link>
-  )
+  );
 }

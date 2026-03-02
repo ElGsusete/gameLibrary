@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
 import { AddGameForm, type AddGameSubmitValues } from '../components/AddGameForm'
+import { AddFromSteam } from '../components/AddFromSteam'
 
 export function AddGamePage() {
   const { addGame } = useGames()
@@ -20,6 +21,10 @@ export function AddGamePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <h1 className="mb-8 text-3xl font-bold text-white">Añadir juego</h1>
+      <div className="mb-10">
+        <AddFromSteam />
+      </div>
+      <h2 className="mb-4 text-xl font-semibold text-zinc-300">Añadir manualmente</h2>
       <AddGameForm onSubmit={handleSubmit} />
     </div>
   )
