@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# GameLog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Biblioteca personal de videojuegos: registra tus juegos, puntúalos y consulta los mejor valorados. Inspirado en la idea de Letterboxd pero para videojuegos.
 
-Currently, two official plugins are available:
+Construido con **React**, **TypeScript** y **Vite**. Los datos se guardan en **localStorage** (sin backend ni cuentas de usuario).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Inicio**: últimos juegos añadidos y mejor valorados.
+- **Listado de juegos**: todos los juegos con filtro por plataforma y orden (fecha, puntuación, título).
+- **Detalle de juego**: portada, plataformas, descripción, puntuación media y valoraciones. Una sola review por juego; se puede editar.
+- **Añadir juego**:
+  - Formulario manual (título, año, URL de portada, plataformas, descripción).
+  - **Importar desde Steam**: búsqueda al escribir (SteamSpy + Steam Store API), con portadas tipo banner y fondo difuminado en las tarjetas.
+- **Mejores juegos** (`/top`): ordenados por puntuación con filtro de mínimo de valoraciones.
+- **Layout**: barra superior fija, contenido centrado y banners laterales en escritorio (placeholders publicitarios).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tecnologías
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19, TypeScript, Vite
+- React Router, Zustand
+- React Hook Form + Zod
+- Tailwind CSS, Lucide React
+- ESLint + TypeScript ESLint
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Cómo ejecutar
+
+**Requisitos:** Node.js (recomendado 20+) y npm.
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Abre [http://localhost:5173](http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Build de producción:**
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+---
+
+## Integración con Steam
+
+- **Lista de juegos:** SteamSpy (`/steamspy/api.php?request=all`), cacheada 24 h en localStorage.
+- **Detalle por juego:** Steam Store API (`/api/appdetails`).
+- En desarrollo, Vite hace de proxy (`vite.config.ts`) para evitar CORS. Sin API key; el uso depende de las políticas de Steam/SteamSpy.
+
+---
+
+## Estructura del proyecto
+
+- `src/App.tsx` – Rutas: `/`, `/games`, `/games/:id`, `/top`, `/add-game`.
+- `src/contexts/GamesContext.tsx` – Estado global (juegos, valoraciones, helpers).
+- `src/services/steamApi.ts` – Llamadas a SteamSpy y Store API, mapeo a `Game`.
+- `src/components/AddFromSteam.tsx` – Búsqueda reactiva con debounce e importación desde Steam.
+- `src/components/GameCard.tsx`, `GameList.tsx` – Tarjetas y grid de juegos.
+- `src/components/Layout/` – Header, Layout con banners laterales.
+
+---
+
+## Licencia
+
+Proyecto de uso personal/educativo. Adapta la licencia si lo reutilizas.
