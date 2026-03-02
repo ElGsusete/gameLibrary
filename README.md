@@ -56,6 +56,8 @@ npm run dev:all
 
 Con `dev:all` se ejecutan en paralelo Vite (puerto 5173) y el servidor Express (3001). Las peticiones a `/api/*` se proxyan al servidor (Vite proxy en `vite.config.ts`).
 
+**Importante:** Los archivos `.env` (y `server/.env`) están en `.gitignore` y **no se suben al repositorio**. Contienen claves y secretos; cada desarrollador debe crear su propio `server/.env` a partir de `server/.env.example`.
+
 **Build de producción:**
 
 ```bash
