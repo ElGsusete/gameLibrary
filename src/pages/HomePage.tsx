@@ -17,20 +17,20 @@ export function HomePage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8">
       <section className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-white md:text-5xl">
+        <h1 className="text-4xl font-bold text-cp-light md:text-5xl">
           Tu lista de juegos
         </h1>
-        <p className="mt-2 text-zinc-400">
+        <p className="mt-2 text-cp-muted">
           Añade juegos y puntúa. Estilo Letterboxd para videojuegos.
         </p>
       </section>
 
       <section className="mb-10">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Últimos añadidos</h2>
+          <h2 className="text-xl font-semibold text-cp-light">Últimos añadidos</h2>
           <Link
             to="/games"
-            className="flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300"
+            className="flex items-center gap-1 text-sm text-cp-neon hover:text-cp-neon/80 transition-colors"
           >
             Ver todos <ArrowRight className="h-4 w-4" />
           </Link>
@@ -40,10 +40,10 @@ export function HomePage() {
 
       <section>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Mejor valorados</h2>
+          <h2 className="text-xl font-semibold text-cp-light">Mejor valorados</h2>
           <Link
             to="/games"
-            className="flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300"
+            className="flex items-center gap-1 text-sm text-cp-neon hover:text-cp-neon/80 transition-colors"
           >
             Ver todos <ArrowRight className="h-4 w-4" />
           </Link>

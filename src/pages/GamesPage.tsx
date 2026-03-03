@@ -31,18 +31,18 @@ export function GamesPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-center text-3xl font-bold text-white">Todos los juegos</h1>
+      <h1 className="mb-6 text-center text-3xl font-bold text-cp-light">Todos los juegos</h1>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
         <div>
-          <label htmlFor="platform" className="mr-2 text-sm text-zinc-400">
+          <label htmlFor="platform" className="mr-2 text-sm text-cp-muted">
             Plataforma:
           </label>
           <select
             id="platform"
             value={platformFilter}
             onChange={(e) => setPlatformFilter(e.target.value)}
-            className="rounded border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-white focus:border-amber-500 focus:outline-none"
+            className="rounded border border-cp-surface bg-cp-dark px-3 py-1.5 text-cp-light focus:border-cp-neon focus:outline-none"
           >
             <option value="">Todas</option>
             {platforms.map((p) => (
@@ -53,14 +53,14 @@ export function GamesPage() {
           </select>
         </div>
         <div>
-          <label htmlFor="sort" className="mr-2 text-sm text-zinc-400">
+          <label htmlFor="sort" className="mr-2 text-sm text-cp-muted">
             Ordenar:
           </label>
           <select
             id="sort"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as 'date' | 'score' | 'title')}
-            className="rounded border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-white focus:border-amber-500 focus:outline-none"
+            className="rounded border border-cp-surface bg-cp-dark px-3 py-1.5 text-cp-light focus:border-cp-neon focus:outline-none"
           >
             <option value="date">Más recientes</option>
             <option value="score">Mejor valorados</option>

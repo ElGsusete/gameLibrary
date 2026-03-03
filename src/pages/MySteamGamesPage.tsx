@@ -25,7 +25,7 @@ function SteamGameCard({
   const showImg = !imgError
   return (
     <div className="flex h-full flex-col">
-      <div className="relative aspect-[460/215] w-full shrink-0 bg-zinc-800">
+      <div className="relative aspect-[460/215] w-full shrink-0 bg-cp-surface">
         {showImg ? (
           <img
             src={STEAM_HEADER_URL(g.appid)}
@@ -34,19 +34,19 @@ function SteamGameCard({
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-zinc-500 text-xs">
+          <div className="flex h-full items-center justify-center text-cp-muted text-xs">
             Sin imagen
           </div>
         )}
       </div>
       <div className="flex min-h-0 flex-1 flex-col p-3">
-        <p className="truncate font-medium text-white" title={g.name}>{g.name}</p>
+        <p className="truncate font-medium text-cp-light" title={g.name}>{g.name}</p>
         {g.playtime_forever != null && g.playtime_forever > 0 && (
-          <p className="text-sm text-zinc-500">{formatHours(g.playtime_forever)}</p>
+          <p className="text-sm text-cp-muted">{formatHours(g.playtime_forever)}</p>
         )}
         <Link
           to={`/add-game?steam=${g.appid}`}
-          className="mt-auto pt-2 text-sm text-amber-400 hover:text-amber-300"
+          className="mt-auto pt-2 text-sm text-cp-neon hover:text-cp-neon/80 transition-colors"
         >
           Añadir a GameLog
         </Link>
@@ -89,8 +89,8 @@ export function MySteamGamesPage() {
   if (!isLoggedIn) {
     return (
       <div className="mx-auto w-full max-w-6xl px-4 py-8 text-center">
-        <h1 className="mb-6 text-3xl font-bold text-white">Mis juegos de Steam</h1>
-        <p className="text-zinc-400">
+        <h1 className="mb-6 text-3xl font-bold text-cp-light">Mis juegos de Steam</h1>
+        <p className="text-cp-muted">
           Inicia sesión con Steam para ver tu biblioteca aquí.
         </p>
       </div>
@@ -112,13 +112,13 @@ export function MySteamGamesPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-center text-3xl font-bold text-white">Mis juegos de Steam</h1>
+      <h1 className="mb-6 text-center text-3xl font-bold text-cp-light">Mis juegos de Steam</h1>
 
-      {loading && <p className="text-center text-zinc-400">Cargando tu biblioteca…</p>}
+      {loading && <p className="text-center text-cp-muted">Cargando tu biblioteca…</p>}
       {error && <p className="text-center text-red-400">{error}</p>}
 
       {!loading && !error && games.length === 0 && (
-        <p className="text-center text-zinc-400">
+        <p className="text-center text-cp-muted">
           No se encontraron juegos. Comprueba que tu perfil de Steam sea público.
         </p>
       )}
@@ -135,10 +135,10 @@ export function MySteamGamesPage() {
               value={nameFilter}
               onChange={(e) => setNameFilter(e.target.value)}
               placeholder="Buscar por nombre…"
-              className="w-full max-w-md rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+              className="w-full max-w-md rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
             />
             {nameFilter.trim() && (
-              <p className="mt-2 text-sm text-zinc-500">
+              <p className="mt-2 text-sm text-cp-muted">
                 {filteredGames.length} de {games.length} juegos
               </p>
             )}
@@ -147,14 +147,14 @@ export function MySteamGamesPage() {
             {filteredGames.map((g) => (
               <li
                 key={g.appid}
-                className="rounded-xl border border-zinc-800 bg-zinc-900/80 overflow-hidden transition hover:border-zinc-700"
+                className="rounded-xl border border-cp-surface bg-cp-dark overflow-hidden transition hover:border-cp-neon/40"
               >
                 <SteamGameCard game={g} formatHours={formatHours} />
               </li>
             ))}
           </ul>
           {filteredGames.length === 0 && nameFilter.trim() && (
-            <p className="text-center text-zinc-400">Ningún juego coincide con la búsqueda.</p>
+            <p className="text-center text-cp-muted">Ningún juego coincide con la búsqueda.</p>
           )}
         </>
       )}

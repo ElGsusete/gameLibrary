@@ -26,18 +26,18 @@ export function TopGamesPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8">
-      <h1 className="mb-6 text-center text-3xl font-bold text-white">Mejores juegos</h1>
+      <h1 className="mb-6 text-center text-3xl font-bold text-cp-light">Mejores juegos</h1>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
         <div>
-          <label htmlFor="min-reviews" className="mr-2 text-sm text-zinc-400">
+          <label htmlFor="min-reviews" className="mr-2 text-sm text-cp-muted">
             Mínimo de valoraciones:
           </label>
           <select
             id="min-reviews"
             value={minReviews}
             onChange={(e) => setMinReviews(Number(e.target.value))}
-            className="rounded border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-white focus:border-amber-500 focus:outline-none"
+            className="rounded border border-cp-surface bg-cp-dark px-3 py-1.5 text-cp-light focus:border-cp-neon focus:outline-none"
           >
             <option value={0}>Todos</option>
             {MIN_REVIEWS_OPTIONS.filter((n) => n > 0).map((n) => (

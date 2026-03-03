@@ -17,7 +17,7 @@ function SteamResultThumb({ appid }: { appid: number }) {
   const [imgError, setImgError] = useState(false)
   if (imgError) {
     return (
-      <div className="h-12 w-[92px] shrink-0 rounded bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500">
+      <div className="h-12 w-[92px] shrink-0 rounded bg-cp-surface flex items-center justify-center text-[10px] text-cp-muted">
         Sin img
       </div>
     )
@@ -147,9 +147,9 @@ export function AddFromSteam() {
   )
 
   return (
-    <div className="mx-auto w-full max-w-xl space-y-4 rounded-xl border border-zinc-700 bg-zinc-800/50 p-6">
-      <h2 className="text-lg font-semibold text-white">Importar desde Steam</h2>
-      <p className="text-sm text-zinc-400">
+    <div className="mx-auto w-full max-w-xl space-y-4 rounded-xl border border-cp-surface bg-cp-dark/80 p-6">
+      <h2 className="text-lg font-semibold text-cp-light">Importar desde Steam</h2>
+      <p className="text-sm text-cp-muted">
         Escribe al menos {MIN_QUERY_LENGTH} caracteres; la búsqueda se actualiza al dejar de escribir. La primera vez puede tardar (se descarga la lista de Steam).
       </p>
       <input
@@ -158,27 +158,27 @@ export function AddFromSteam() {
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && runSearchNow()}
         placeholder="Nombre del juego en Steam"
-        className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+        className="w-full rounded-lg border border-cp-surface bg-cp-black px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
       />
       {loading && (
-        <p className="text-sm text-zinc-500">Buscando…</p>
+        <p className="text-sm text-cp-muted">Buscando…</p>
       )}
       {error && (
         <p className="text-sm text-red-400">{error}</p>
       )}
       {results.length > 0 && (
-        <ul className="max-h-96 space-y-2 overflow-y-auto rounded-lg border border-zinc-700 bg-zinc-900 p-2">
+        <ul className="max-h-96 space-y-2 overflow-y-auto rounded-lg border border-cp-surface bg-cp-black p-2">
           {results.map((app) => (
             <li key={app.appid}>
               <button
                 type="button"
                 onClick={() => handleSelect(app)}
                 disabled={detailLoading === app.appid}
-                className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-white hover:bg-zinc-700 disabled:opacity-50"
+                className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-cp-light hover:bg-cp-surface disabled:opacity-50 transition-colors"
               >
                 <SteamResultThumb appid={app.appid} />
                 <span className="min-w-0 flex-1 truncate font-medium">{app.name}</span>
-                <span className="shrink-0 text-zinc-500">({app.appid})</span>
+                <span className="shrink-0 text-cp-muted">({app.appid})</span>
               </button>
             </li>
           ))}

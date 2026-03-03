@@ -12,7 +12,7 @@ export function GameList({
 }) {
   if (games.length === 0) {
     return (
-      <p className="py-12 text-center text-zinc-500">{emptyMessage}</p>
+      <p className="py-12 text-center text-cp-muted">{emptyMessage}</p>
     )
   }
   return (

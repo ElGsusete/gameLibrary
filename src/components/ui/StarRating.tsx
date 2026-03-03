@@ -21,19 +21,19 @@ export function StarRatingDisplay({ score, max = 5, size = 'md', className }: St
   return (
     <div className={cn('flex items-center gap-0.5', className)} title={`${score}/${max}`}>
       {Array.from({ length: full }).map((_, i) => (
-        <Star key={`full-${i}`} className={cn(iconClass, 'fill-amber-400 text-amber-400')} />
+        <Star key={`full-${i}`} className={cn(iconClass, 'fill-cp-neon text-cp-neon')} />
       ))}
       {hasHalf && (
         <span className="relative inline-block">
-          <Star className={cn(iconClass, 'text-zinc-600')} />
+          <Star className={cn(iconClass, 'text-cp-surface')} />
           <Star
-            className={cn(iconClass, 'absolute left-0 top-0 fill-amber-400 text-amber-400')}
+            className={cn(iconClass, 'absolute left-0 top-0 fill-cp-neon text-cp-neon')}
             style={{ clipPath: 'inset(0 50% 0 0)' }}
           />
         </span>
       )}
       {Array.from({ length: empty }).map((_, i) => (
-        <Star key={`empty-${i}`} className={cn(iconClass, 'text-zinc-600')} />
+        <Star key={`empty-${i}`} className={cn(iconClass, 'text-cp-surface')} />
       ))}
     </div>
   )
@@ -68,14 +68,14 @@ export function StarRatingInput({
                 onChange(starValue)
               }
             }}
-            className="p-0.5 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400 rounded"
+            className="p-0.5 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-cp-neon rounded"
             aria-label={`${starValue} de ${max} estrellas`}
             aria-pressed={filled}
           >
             <Star
               className={cn(
                 'h-8 w-8 transition-colors',
-                filled ? 'fill-amber-400 text-amber-400' : 'text-zinc-500 hover:text-amber-500'
+                filled ? 'fill-cp-neon text-cp-neon' : 'text-cp-muted hover:text-cp-neon'
               )}
             />
           </button>

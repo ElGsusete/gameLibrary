@@ -95,21 +95,21 @@ export function AddGamePage() {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-8">
-      <h1 className="mb-8 text-center text-3xl font-bold text-white">Añadir juego</h1>
+      <h1 className="mb-8 text-center text-3xl font-bold text-cp-light">Añadir juego</h1>
       {steamImportState === 'loading' && (
-        <div className="mb-6 rounded-md border border-zinc-700 bg-zinc-900/80 px-3 py-4 text-center text-sm text-zinc-300">
+        <div className="mb-6 rounded-md border border-cp-surface bg-cp-dark px-3 py-4 text-center text-sm text-cp-light">
           Importando desde Steam… Redirigiendo a la página del juego para asignar tu valoración.
         </div>
       )}
       {steamImportState === 'error' && steamError && (
-        <div className="mb-6 rounded-md border border-red-800 bg-red-950/80 px-3 py-2 text-sm text-red-200">
+        <div className="mb-6 rounded-md border border-red-500/60 bg-red-950/80 px-3 py-2 text-sm text-red-200">
           {steamError}
         </div>
       )}
       <div className="mb-10 flex justify-center">
         <AddFromSteam />
       </div>
-      <h2 className="mb-4 text-center text-xl font-semibold text-zinc-300">Añadir manualmente</h2>
+      <h2 className="mb-4 text-center text-xl font-semibold text-cp-light">Añadir manualmente</h2>
       <div className="flex justify-center">
         <AddGameForm onSubmit={handleSubmit} />
       </div>

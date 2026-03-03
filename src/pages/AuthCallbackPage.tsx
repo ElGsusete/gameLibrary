@@ -19,7 +19,7 @@ export function AuthCallbackPage() {
 
   return (
     <div className="flex min-h-[40vh] items-center justify-center">
-      <p className="text-zinc-400">Iniciando sesión…</p>
+      <p className="text-cp-muted">Iniciando sesión…</p>
     </div>
   )
 }

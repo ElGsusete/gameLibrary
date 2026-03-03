@@ -48,10 +48,10 @@ export function GameDetailPage() {
   if (!game) {
     return (
       <div className="mx-auto w-full max-w-4xl px-4 py-12 text-center">
-        <p className="text-zinc-400">Juego no encontrado.</p>
+        <p className="text-cp-muted">Juego no encontrado.</p>
         <button
           onClick={() => navigate('/games')}
-          className="mt-4 text-amber-400 hover:text-amber-300"
+          className="mt-4 text-cp-neon hover:text-cp-neon/80 transition-colors"
         >
           Volver al listado
         </button>
@@ -63,7 +63,7 @@ export function GameDetailPage() {
     <div className="mx-auto w-full max-w-4xl px-4 py-8">
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="shrink-0">
-          <div className="aspect-[3/4] w-56 overflow-hidden rounded-lg bg-zinc-800 relative">
+          <div className="aspect-[3/4] w-56 overflow-hidden rounded-lg bg-cp-surface relative">
             {game.coverImage ? (
               <>
                 <div
@@ -81,19 +81,19 @@ export function GameDetailPage() {
                 />
               </>
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-4xl text-zinc-500">
+              <div className="flex h-full w-full items-center justify-center text-4xl text-cp-muted">
                 ?
               </div>
             )}
           </div>
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-3xl font-bold text-white">{game.title}</h1>
+          <h1 className="text-3xl font-bold text-cp-light">{game.title}</h1>
           {game.year != null && (
-            <p className="mt-1 text-zinc-500">{game.year}</p>
+            <p className="mt-1 text-cp-muted">{game.year}</p>
           )}
           {game.platform && game.platform.length > 0 && (
-            <p className="mt-2 text-sm text-zinc-400">
+            <p className="mt-2 text-sm text-cp-muted">
               {game.platform.join(' · ')}
             </p>
           )}
@@ -101,24 +101,24 @@ export function GameDetailPage() {
             {averageScore != null && (
               <span className="flex items-center gap-2">
                 <StarRatingDisplay score={averageScore} />
-                <span className="text-lg font-semibold text-amber-400">
+                <span className="text-lg font-semibold text-cp-neon">
                   {averageScore}
                 </span>
-                <span className="text-zinc-500">
+                <span className="text-cp-muted">
                   ({ratings.length} valoración{ratings.length !== 1 ? 'es' : ''})
                 </span>
               </span>
             )}
             {averageScore == null && (
-              <span className="text-zinc-500">Sin valoraciones aún</span>
+              <span className="text-cp-muted">Sin valoraciones aún</span>
             )}
           </div>
           {game.description && (
-            <p className="mt-4 text-zinc-300">{game.description}</p>
+            <p className="mt-4 text-cp-light/90">{game.description}</p>
           )}
           <button
             onClick={() => (showForm ? setShowForm(false) : handleOpenForm())}
-            className="mt-6 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400"
+            className="mt-6 rounded-lg border border-cp-neon bg-cp-neon px-4 py-2 text-sm font-medium text-cp-black hover:bg-cp-neon/90 transition-colors"
           >
             {showForm ? 'Cancelar' : myRating ? 'Modificar mi valoración' : 'Añadir mi valoración'}
           </button>
@@ -128,26 +128,26 @@ export function GameDetailPage() {
       {showForm && (
         <form
           onSubmit={handleSubmitRating}
-          className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900/50 p-6"
+          className="mt-8 rounded-lg border border-cp-surface bg-cp-dark/80 p-6"
         >
-          <label className="mb-2 block text-sm font-medium text-zinc-300">
+          <label className="mb-2 block text-sm font-medium text-cp-light">
             Puntuación (1-5)
           </label>
           <StarRatingInput value={score} onChange={setScore} />
-          <label className="mt-4 mb-2 block text-sm font-medium text-zinc-300">
+          <label className="mt-4 mb-2 block text-sm font-medium text-cp-light">
             Comentario (opcional)
           </label>
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={3}
-            className="w-full rounded border border-zinc-700 bg-zinc-900 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
+            className="w-full rounded border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none"
             placeholder="Tu opinión..."
           />
           <button
             type="submit"
             disabled={score < 1}
-            className="mt-4 rounded-lg bg-amber-500 px-4 py-2 font-medium text-zinc-950 disabled:opacity-50 hover:bg-amber-400"
+            className="mt-4 rounded-lg border border-cp-neon bg-cp-neon px-4 py-2 font-medium text-cp-black disabled:opacity-50 hover:bg-cp-neon/90 transition-colors"
           >
             {myRating ? 'Guardar cambios' : 'Enviar valoración'}
           </button>
@@ -155,25 +155,25 @@ export function GameDetailPage() {
       )}
 
       <section className="mt-10">
-        <h2 className="mb-4 text-xl font-semibold text-white">Valoraciones</h2>
+        <h2 className="mb-4 text-xl font-semibold text-cp-light">Valoraciones</h2>
         {sortedRatings.length === 0 ? (
-          <p className="text-zinc-500">Aún no hay valoraciones.</p>
+          <p className="text-cp-muted">Aún no hay valoraciones.</p>
         ) : (
           <ul className="space-y-4">
             {sortedRatings.map((r) => (
               <li
                 key={r.id}
-                className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-4"
+                className="rounded-lg border border-cp-surface bg-cp-dark/50 p-4"
               >
                 <div className="flex items-center gap-2">
                   <StarRatingDisplay score={r.score} size="sm" />
-                  <span className="font-medium text-amber-400">{r.score}/5</span>
-                  <span className="text-sm text-zinc-500">
+                  <span className="font-medium text-cp-neon">{r.score}/5</span>
+                  <span className="text-sm text-cp-muted">
                     {formatDate(r.ratedAt)}
                   </span>
                 </div>
                 {r.comment && (
-                  <p className="mt-2 text-zinc-300">{r.comment}</p>
+                  <p className="mt-2 text-cp-light/90">{r.comment}</p>
                 )}
               </li>
             ))}

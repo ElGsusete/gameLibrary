@@ -12,12 +12,12 @@ function SideBanner({ side }: { side: "left" | "right" }) {
       aria-label={`Banner ${side === "left" ? "izquierdo" : "derecho"}`}
     >
       <div
-        className={`sticky top-24 rounded-lg border border-zinc-800 bg-zinc-900/80 ${BANNER_MIN_HEIGHT} flex flex-col items-center justify-center px-2 py-4 text-center`}
+        className={`sticky top-24 rounded-lg border border-cp-surface bg-cp-dark/90 ${BANNER_MIN_HEIGHT} flex flex-col items-center justify-center px-2 py-4 text-center`}
       >
-        <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+        <span className="text-xs font-medium uppercase tracking-wider text-cp-muted">
           Espacio publicitario
         </span>
-        <span className="mt-2 text-[10px] text-zinc-600">160 × 600</span>
+        <span className="mt-2 text-[10px] text-cp-muted/80">160 × 600</span>
       </div>
     </aside>
   );
@@ -44,17 +44,17 @@ function AuthErrorBanner() {
   return (
     <div
       role="alert"
-      className="rounded-md border border-amber-800 bg-amber-950/80 px-3 py-2 text-sm text-amber-200"
+      className="rounded-md border border-cp-neon/50 bg-cp-surface px-3 py-2 text-sm text-cp-light"
     >
       <p className="font-medium">Login con Steam no configurado</p>
-      <p className="mt-0.5 text-amber-300/90">
-        El servidor necesita una clave de Steam API. Crea <code className="rounded bg-zinc-800 px-1">server/.env</code> con{" "}
-        <code className="rounded bg-zinc-800 px-1">STEAM_API_KEY=tu_clave</code>. Obtén la clave en{" "}
+      <p className="mt-0.5 text-cp-muted">
+        El servidor necesita una clave de Steam API. Crea <code className="rounded bg-cp-dark px-1 text-cp-neon">server/.env</code> con{" "}
+        <code className="rounded bg-cp-dark px-1 text-cp-neon">STEAM_API_KEY=tu_clave</code>. Obtén la clave en{" "}
         <a
           href="https://steamcommunity.com/dev/apikey"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline hover:text-amber-200"
+          className="underline text-cp-neon hover:text-cp-neon/90"
         >
           steamcommunity.com/dev/apikey
         </a>
@@ -63,7 +63,7 @@ function AuthErrorBanner() {
       <button
         type="button"
         onClick={() => setShow(false)}
-        className="mt-2 text-xs underline hover:no-underline"
+        className="mt-2 text-xs text-cp-neon underline hover:no-underline"
       >
         Cerrar
       </button>
@@ -107,7 +107,7 @@ function AuthFeedbackBanner() {
       <div
         role="status"
         aria-live="polite"
-        className="rounded-md border border-emerald-800 bg-emerald-950/80 px-3 py-2 text-sm text-emerald-200"
+        className="rounded-md border border-cp-neon/60 bg-cp-surface px-3 py-2 text-sm text-cp-light"
       >
         <p className="font-medium">Sesión iniciada con Steam correctamente.</p>
       </div>
@@ -117,7 +117,7 @@ function AuthFeedbackBanner() {
     <div
       role="status"
       aria-live="polite"
-      className="rounded-md border border-red-800 bg-red-950/80 px-3 py-2 text-sm text-red-200"
+      className="rounded-md border border-red-500/60 bg-red-950/80 px-3 py-2 text-sm text-red-200"
     >
       <p className="font-medium">Sesión cerrada.</p>
     </div>
@@ -126,7 +126,7 @@ function AuthFeedbackBanner() {
 
 export function Layout() {
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen flex flex-col bg-cp-dark text-cp-light">
       <Header />
       <main className="flex-1 py-8">
         <div className="mx-auto flex w-full max-w-[calc(1152px+320px)] flex-col xl:flex-row xl:justify-center xl:gap-0">
@@ -141,7 +141,7 @@ export function Layout() {
           <SideBanner side="right" />
         </div>
       </main>
-      <footer className="border-t border-zinc-800 py-4 text-center text-sm text-zinc-500">
+      <footer className="border-t border-cp-surface py-4 text-center text-sm text-cp-muted">
         GameLog — Tu lista de juegos. Los datos no son reales.
       </footer>
     </div>
