@@ -31,6 +31,29 @@ Construido con **React**, **TypeScript** y **Vite**. Los datos se guardan en **l
 - React Hook Form + Zod
 - Tailwind CSS, Lucide React
 - ESLint + TypeScript ESLint
+- **Testing:** Vitest (unitarios e integración), React Testing Library + jsdom (componentes), Supertest (API Express), Playwright (E2E)
+
+---
+
+## Testing
+
+**Tests unitarios e integración (Vitest):**
+
+```bash
+npm run test        # modo watch
+npm run test:run    # una sola ejecución
+```
+
+Incluyen: utilidades (`src/lib/utils`), componentes React (p. ej. `GameCard`), y rutas del API en `server/` (auth, `/api/me/games`) con Supertest. Los tests del frontend usan React Testing Library y jsdom; los del servidor se ejecutan en entorno Node.
+
+**Tests E2E (Playwright):**
+
+```bash
+npm run test:e2e      # ejecuta los tests E2E (arranca el front con npm run dev)
+npm run test:e2e:ui   # interfaz gráfica de Playwright
+```
+
+Cubren flujos en navegador: carga de la home, navegación a la lista de juegos y a «Añadir juego». La primera vez puede ser necesario instalar los navegadores: `npx playwright install chromium`.
 
 ---
 
@@ -90,6 +113,7 @@ npm run preview
 - `src/components/Layout/` – Header (búsqueda, menú Juegos, menú móvil), Layout con banners laterales y márgenes uniformes.
 - `src/pages/MySteamGamesPage.tsx` – Biblioteca Steam con búsqueda por nombre e imágenes de cabecera.
 - `server/` – Express, passport-steam, JWT, `/api/auth/steam`, `/api/me/games`.
+- **Testing:** `src/**/*.test.{ts,tsx}` (Vitest + React Testing Library), `server/**/*.test.js` (Vitest + Supertest), `e2e/*.spec.ts` (Playwright). Configuración de Vitest en `vite.config.ts`; E2E en `playwright.config.ts`.
 
 ---
 

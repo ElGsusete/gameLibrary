@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -11,6 +12,13 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 export default defineConfig({
   // Base relativa para que funcione en GitHub Pages (https://user.github.io/repo/)
   base: './',
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'server/**/*.{test,spec}.js'],
+    environmentMatchGlobs: [['server/**', 'node']],
+  },
   plugins: [
     react(),
     tailwindcss(),

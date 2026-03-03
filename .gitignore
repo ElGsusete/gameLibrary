@@ -29,3 +29,8 @@ server/.env
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright (reportes y resultados E2E)
+playwright-report/
+test-results/
+.blob
