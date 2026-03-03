@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -12,6 +11,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 export default defineConfig({
   // Base relativa para que funcione en GitHub Pages (https://user.github.io/repo/)
   base: './',
+  // @ts-expect-error Vitest añade la opción "test" a la config de Vite en tiempo de ejecución
   test: {
     environment: 'jsdom',
     globals: true,
