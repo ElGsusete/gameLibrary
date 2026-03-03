@@ -4,6 +4,8 @@ Biblioteca personal de videojuegos: registra tus juegos, puntúalos y consulta l
 
 Construido con **React**, **TypeScript** y **Vite**. Los datos se guardan en **localStorage**. Opcionalmente puedes **iniciar sesión con Steam** (backend Express) para ver **Mis juegos de Steam**.
 
+**Probar en línea:** [https://elgsusete.github.io/gameLibrary/](https://elgsusete.github.io/gameLibrary/) (versión desplegada en GitHub Pages; login con Steam y búsqueda Steam no disponibles en esa URL).
+
 ---
 
 ## Funcionalidades
