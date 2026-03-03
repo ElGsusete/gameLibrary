@@ -1,23 +1,33 @@
 import { useEffect, useState } from "react";
 import { Outlet, useSearchParams } from "react-router-dom";
+import { Github } from "lucide-react";
 import { Header } from "./Header";
 
 const BANNER_WIDTH = "w-[160px]";
 const BANNER_MIN_HEIGHT = "min-h-[600px]";
 
+const BANNER_IMAGES = {
+  left: `${import.meta.env.BASE_URL}banner-left.svg`,
+  right: `${import.meta.env.BASE_URL}banner-right.svg`,
+} as const;
+
 function SideBanner({ side }: { side: "left" | "right" }) {
+  const imgSrc = BANNER_IMAGES[side];
   return (
     <aside
       className={`hidden shrink-0 xl:block ${BANNER_WIDTH} ${side === "left" ? "xl:order-first xl:ml-6" : "xl:order-last xl:mr-6"}`}
       aria-label={`Banner ${side === "left" ? "izquierdo" : "derecho"}`}
     >
       <div
-        className={`sticky top-24 rounded-lg border border-cp-surface bg-cp-dark/90 ${BANNER_MIN_HEIGHT} flex flex-col items-center justify-center px-2 py-4 text-center`}
+        className={`sticky top-24 overflow-hidden rounded-lg border border-cp-surface bg-cp-dark/90 ${BANNER_MIN_HEIGHT}`}
       >
-        <span className="text-xs font-medium uppercase tracking-wider text-cp-muted">
-          Espacio publicitario
-        </span>
-        <span className="mt-2 text-[10px] text-cp-muted/80">160 × 600</span>
+        <img
+          src={imgSrc}
+          alt=""
+          width={160}
+          height={600}
+          className="h-full w-full object-cover"
+        />
       </div>
     </aside>
   );
@@ -142,7 +152,16 @@ export function Layout() {
         </div>
       </main>
       <footer className="border-t border-cp-surface py-4 text-center text-sm text-cp-muted">
-        GameLog — Tu lista de juegos. Los datos no son reales.
+        <span className="block mb-2">GameLog — Tu lista de juegos. Los datos no son reales.</span>
+        <a
+          href="https://github.com/ElGsusete/gameLibrary"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 rounded-md border border-cp-surface bg-cp-dark px-3 py-1.5 text-cp-muted hover:text-cp-neon hover:border-cp-neon/50 transition-colors"
+        >
+          <Github className="h-4 w-4" aria-hidden />
+          Ver en GitHub
+        </a>
       </footer>
     </div>
   );
