@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Gamepad2,
   Home,
@@ -29,6 +29,7 @@ export function Header() {
   const gamesMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -57,6 +58,18 @@ export function Header() {
   }, []);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const handleLogout = () => {
+    logout();
+    const onSteamGamesPage = location.pathname.includes("my-steam-games");
+    if (onSteamGamesPage) {
+      navigate("/?logout=1", { replace: true });
+    } else {
+      const next = new URLSearchParams(location.search);
+      next.set("logout", "1");
+      navigate({ pathname: location.pathname, search: next.toString() }, { replace: true });
+    }
+  };
 
   // Animación de entrada del desplegable
   useEffect(() => {
@@ -242,7 +255,7 @@ export function Header() {
           {isLoggedIn ? (
             <button
               type="button"
-              onClick={logout}
+              onClick={handleLogout}
               className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white"
               title="Cerrar sesión"
             >
@@ -332,7 +345,7 @@ export function Header() {
                 <button
                   type="button"
                   onClick={() => {
-                    logout();
+                    handleLogout();
                     closeMobileMenu();
                   }}
                   className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-zinc-300 hover:bg-zinc-800 hover:text-white"

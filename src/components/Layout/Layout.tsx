@@ -44,10 +44,10 @@ function AuthErrorBanner() {
   return (
     <div
       role="alert"
-      className="mx-4 mt-4 rounded-lg border border-amber-800 bg-amber-950/80 px-4 py-3 text-sm text-amber-200"
+      className="rounded-md border border-amber-800 bg-amber-950/80 px-3 py-2 text-sm text-amber-200"
     >
       <p className="font-medium">Login con Steam no configurado</p>
-      <p className="mt-1 text-amber-300/90">
+      <p className="mt-0.5 text-amber-300/90">
         El servidor necesita una clave de Steam API. Crea <code className="rounded bg-zinc-800 px-1">server/.env</code> con{" "}
         <code className="rounded bg-zinc-800 px-1">STEAM_API_KEY=tu_clave</code>. Obtén la clave en{" "}
         <a
@@ -63,10 +63,63 @@ function AuthErrorBanner() {
       <button
         type="button"
         onClick={() => setShow(false)}
-        className="mt-3 text-xs underline hover:no-underline"
+        className="mt-2 text-xs underline hover:no-underline"
       >
         Cerrar
       </button>
+    </div>
+  );
+}
+
+function AuthFeedbackBanner() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [message, setMessage] = useState<"login" | "logout" | null>(null);
+
+  useEffect(() => {
+    const auth = searchParams.get("auth");
+    const logout = searchParams.get("logout");
+    if (auth === "success") {
+      setMessage("login");
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete("auth");
+        return next;
+      }, { replace: true });
+    } else if (logout === "1") {
+      setMessage("logout");
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete("logout");
+        return next;
+      }, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
+  useEffect(() => {
+    if (!message) return;
+    const id = setTimeout(() => setMessage(null), 5000);
+    return () => clearTimeout(id);
+  }, [message]);
+
+  if (!message) return null;
+  if (message === "login") {
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        className="rounded-md border border-emerald-800 bg-emerald-950/80 px-3 py-2 text-sm text-emerald-200"
+      >
+        <p className="font-medium">Sesión iniciada con Steam correctamente.</p>
+      </div>
+    );
+  }
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="rounded-md border border-red-800 bg-red-950/80 px-3 py-2 text-sm text-red-200"
+    >
+      <p className="font-medium">Sesión cerrada.</p>
     </div>
   );
 }
@@ -75,12 +128,15 @@ export function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100">
       <Header />
-      <AuthErrorBanner />
       <main className="flex-1 py-8">
         <div className="mx-auto flex w-full max-w-[calc(1152px+320px)] flex-col xl:flex-row xl:justify-center xl:gap-0">
           <SideBanner side="left" />
           <div className="min-h-0 min-w-0 flex-1 px-4 py-6 xl:max-w-6xl xl:px-6">
-            <Outlet />
+            <div className="flex flex-col gap-2">
+              <AuthErrorBanner />
+              <AuthFeedbackBanner />
+              <Outlet />
+            </div>
           </div>
           <SideBanner side="right" />
         </div>

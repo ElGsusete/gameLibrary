@@ -11,8 +11,10 @@ export function AuthCallbackPage() {
     const token = searchParams.get('token')
     if (token) {
       setTokenFromCallback(token)
+      navigate('/?auth=success', { replace: true })
+    } else {
+      navigate('/', { replace: true })
     }
-    navigate('/', { replace: true })
   }, [searchParams, setTokenFromCallback, navigate])
 
   return (
