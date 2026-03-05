@@ -13,14 +13,13 @@ import jwt from 'jsonwebtoken'
 
 export const PORT = process.env.PORT || 3001
 export const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
+const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`
 const STEAM_API_KEY = process.env.STEAM_API_KEY || ''
 export const JWT_SECRET = process.env.JWT_SECRET || 'gamelog-dev-secret-change-in-production'
 
 const app = express()
 app.use(cors({ origin: FRONTEND_URL, credentials: true }))
 app.use(passport.initialize())
-
-const BACKEND_URL = `http://localhost:${PORT}`
 
 if (STEAM_API_KEY) {
   passport.use(

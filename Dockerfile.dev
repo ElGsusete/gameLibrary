@@ -1,0 +1,17 @@
+# Imagen para desarrollo del frontend (Vite)
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+COPY . .
+
+# En Docker, el proxy de Vite debe apuntar al servicio "server"
+ENV API_PROXY_TARGET=http://server:3001
+
+EXPOSE 5173
+
+# --host para que Vite escuche en 0.0.0.0 y sea accesible desde el host
+CMD ["npm", "run", "dev", "--", "--host"]

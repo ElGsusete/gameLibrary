@@ -34,6 +34,7 @@ Construido con **React**, **TypeScript** y **Vite**. Los datos se guardan en **l
 - Tailwind CSS, Lucide React
 - ESLint + TypeScript ESLint
 - **Testing:** Vitest (unitarios e integración), React Testing Library + jsdom (componentes), Supertest (API Express), Playwright (E2E)
+- **Desarrollo local:** Docker y Docker Compose (frontend + API en contenedores, hot reload)
 
 ---
 
@@ -83,6 +84,17 @@ Con `dev:all` se ejecutan en paralelo Vite (puerto 5173) y el servidor Express (
 
 **Importante:** Los archivos `.env` (y `server/.env`) están en `.gitignore` y **no se suben al repositorio**. Contienen claves y secretos; cada desarrollador debe crear su propio `server/.env` a partir de `server/.env.example`.
 
+**Ejecutar con Docker (frontend + API):**
+
+```bash
+docker compose up --build
+```
+
+- **Frontend:** [http://localhost:5173](http://localhost:5173)  
+- **API:** [http://localhost:3001](http://localhost:3001)
+
+Los cambios en `src/` se recargan solos (volúmenes montados). Para usar login con Steam, crea `server/.env` con `STEAM_API_KEY`, `JWT_SECRET`, etc., y en `docker-compose.yml` descomenta la línea `env_file: [ ./server/.env ]` del servicio `server`. El despliegue del front en GitHub Pages no usa Docker; el workflow existente sigue construyendo y publicando `dist` desde GitHub Actions.
+
 **Build de producción:**
 
 ```bash
@@ -115,6 +127,7 @@ npm run preview
 - `src/components/Layout/` – Header (búsqueda, menú Juegos, menú móvil), Layout con banners laterales y márgenes uniformes.
 - `src/pages/MySteamGamesPage.tsx` – Biblioteca Steam con búsqueda por nombre e imágenes de cabecera.
 - `server/` – Express, passport-steam, JWT, `/api/auth/steam`, `/api/me/games`.
+- **Docker:** `docker-compose.yml` (orquestación front + API), `Dockerfile.dev` (frontend con Vite), `server/Dockerfile` (API). `.dockerignore` en raíz y en `server/`.
 - **Testing:** `src/**/*.test.{ts,tsx}` (Vitest + React Testing Library), `server/**/*.test.js` (Vitest + Supertest), `e2e/*.spec.ts` (Playwright). Configuración de Vitest en `vite.config.ts`; E2E en `playwright.config.ts`.
 
 ---

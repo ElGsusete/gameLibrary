@@ -1,0 +1,38 @@
+# Desarrollo local: frontend (Vite) + API (Express)
+# Uso: docker compose up --build
+# Frontend: http://localhost:5173  |  API: http://localhost:3001
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      FRONTEND_URL: http://localhost:5173
+      BACKEND_URL: http://localhost:3001
+    # Descomenta y crea server/.env para Steam (STEAM_API_KEY, JWT_SECRET):
+    # env_file: [ ./server/.env ]
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    environment:
+      API_PROXY_TARGET: http://server:3001
+    volumes:
+      # Hot reload: cambios en src se reflejan sin reconstruir
+      - ./src:/app/src
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.app.json:/app/tsconfig.app.json
+      - ./tsconfig.node.json:/app/tsconfig.node.json
+    depends_on:
+      - server
+    restart: unless-stopped
