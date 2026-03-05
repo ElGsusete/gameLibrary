@@ -95,6 +95,8 @@ docker compose up --build
 
 Los cambios en `src/` se recargan solos (volúmenes montados). Para usar login con Steam, crea `server/.env` con `STEAM_API_KEY`, `JWT_SECRET`, etc., y en `docker-compose.yml` descomenta la línea `env_file: [ ./server/.env ]` del servicio `server`. El despliegue del front en GitHub Pages no usa Docker; el workflow existente sigue construyendo y publicando `dist` desde GitHub Actions.
 
+**Parar los contenedores:** Si ejecutaste `docker compose up` en primer plano, pulsa **Ctrl+C**. Si los contenedores están en segundo plano (o en otra terminal), usa `docker compose down` para pararlos y eliminarlos, o `docker compose stop` solo para pararlos (podrás reanudar con `docker compose start`).
+
 **Build de producción:**
 
 ```bash
