@@ -94,7 +94,7 @@ export function AddGamePage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-8 lg:flex-row lg:items-start">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-3 py-6 sm:gap-8 sm:px-4 sm:py-8 lg:flex-row lg:items-start">
       <div className="w-full lg:w-7/12">
         <h1 className="mb-2 text-center text-3xl font-bold text-cp-light lg:text-left">
           Añadir juego
@@ -112,7 +112,7 @@ export function AddGamePage() {
             {steamError}
           </div>
         )}
-        <div className="rounded-2xl border border-cp-neon/60 bg-cp-black/80 p-6 shadow-2xl backdrop-blur-sm">
+        <div className="rounded-2xl border border-cp-neon/60 bg-cp-black/80 p-4 shadow-2xl backdrop-blur-sm sm:p-6">
           <div className="mb-2 flex items-center justify-between gap-2">
             <h2 className="text-lg font-semibold text-cp-light lg:text-left">
               Importar desde Steam
@@ -132,7 +132,7 @@ export function AddGamePage() {
 
       <div className="w-full lg:w-5/12">
         <h2 className="mb-4 text-center text-xl font-semibold text-cp-light lg:text-left">Añadir manualmente</h2>
-        <div className="rounded-2xl border border-cp-surface/80 bg-cp-black/80 p-6 shadow-2xl backdrop-blur-sm sm:p-7 lg:p-8">
+        <div className="rounded-2xl border border-cp-surface/80 bg-cp-black/80 p-4 shadow-2xl backdrop-blur-sm sm:p-6 lg:p-7">
           <AddGameForm onSubmit={handleSubmit} />
         </div>
       </div>

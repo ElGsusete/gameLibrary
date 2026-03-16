@@ -67,7 +67,10 @@ export function Header() {
     } else {
       const next = new URLSearchParams(location.search);
       next.set("logout", "1");
-      navigate({ pathname: location.pathname, search: next.toString() }, { replace: true });
+      navigate(
+        { pathname: location.pathname, search: next.toString() },
+        { replace: true },
+      );
     }
   };
 
@@ -117,7 +120,9 @@ export function Header() {
             )}
             <span className="truncate">{g.title}</span>
             {g.averageScore != null && (
-              <span className="ml-auto shrink-0 text-cp-neon">{g.averageScore}</span>
+              <span className="ml-auto shrink-0 text-cp-neon">
+                {g.averageScore}
+              </span>
             )}
           </button>
         </li>
@@ -126,7 +131,10 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-cp-surface bg-cp-dark/98 backdrop-blur" ref={mobileMenuRef}>
+    <header
+      className="sticky top-0 z-50 border-b border-cp-surface bg-cp-dark/98 backdrop-blur"
+      ref={mobileMenuRef}
+    >
       <div className="relative flex h-14 w-full items-center gap-2 px-4">
         {/* Logo */}
         <Link
@@ -159,7 +167,11 @@ export function Header() {
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           </div>
 
@@ -180,14 +192,6 @@ export function Header() {
 
         {/* Desktop: navegación */}
         <nav className="ml-auto hidden shrink-0 items-center gap-2 sm:gap-4 md:flex">
-          <Link
-            to="/"
-            className="flex items-center gap-1.5 text-sm text-cp-muted hover:text-cp-neon transition-colors"
-          >
-            <Home className="h-4 w-4" />
-            <span className="hidden sm:inline">Inicio</span>
-          </Link>
-
           {/* Desplegable Juegos */}
           <div ref={gamesMenuRef} className="relative">
             <button
@@ -199,7 +203,9 @@ export function Header() {
             >
               <LayoutGrid className="h-4 w-4" />
               <span className="hidden sm:inline">Juegos</span>
-              <ChevronDown className={`h-4 w-4 transition-transform duration-200 ease-out ${showGamesMenu ? "rotate-180" : ""}`} />
+              <ChevronDown
+                className={`h-4 w-4 transition-transform duration-200 ease-out ${showGamesMenu ? "rotate-180" : ""}`}
+              />
             </button>
             {showGamesMenu && (
               <ul

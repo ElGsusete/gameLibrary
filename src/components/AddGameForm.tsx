@@ -55,7 +55,7 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
           : undefined
         onSubmit({ ...parsed.data, platform: platforms })
       })}
-      className="mx-auto max-w-xl space-y-4"
+      className="mx-auto w-full max-w-2xl space-y-4"
     >
       <div>
         <label htmlFor="title" className="mb-1 block text-sm font-medium text-cp-light">
