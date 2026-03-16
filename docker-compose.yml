@@ -13,8 +13,8 @@ services:
       PORT: 3001
       FRONTEND_URL: http://localhost:5173
       BACKEND_URL: http://localhost:3001
-    # Descomenta y crea server/.env para Steam (STEAM_API_KEY, JWT_SECRET):
-    # env_file: [ ./server/.env ]
+    # Variables sensibles (STEAM_API_KEY, JWT_SECRET) se leen de server/.env
+    env_file: [ ./server/.env ]
     restart: unless-stopped
 
   frontend:
