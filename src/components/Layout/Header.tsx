@@ -291,7 +291,7 @@ export function Header() {
               <img
                 src="/steamLogo.png"
                 alt="Iniciar sesión con Steam"
-                className="h-5 w-5"
+                className="h-7 w-7"
               />
               <span className="hidden sm:inline">Iniciar con Steam</span>
             </button>
