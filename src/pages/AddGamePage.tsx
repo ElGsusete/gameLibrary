@@ -67,6 +67,8 @@ export function AddGamePage() {
           coverImage: game.coverImage,
           platform: game.platform,
           description: game.description,
+          steamScore: game.steamScore,
+          steamReviewsCount: game.steamReviewsCount,
         })
         setSearchParams((prev) => {
           const next = new URLSearchParams(prev)

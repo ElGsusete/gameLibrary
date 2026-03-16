@@ -133,6 +133,8 @@ export function AddFromSteam() {
           coverImage: game.coverImage,
           platform: game.platform,
           description: game.description,
+          steamScore: game.steamScore,
+          steamReviewsCount: game.steamReviewsCount,
         })
         navigate(`/games/${game.id}`)
       } catch (e) {

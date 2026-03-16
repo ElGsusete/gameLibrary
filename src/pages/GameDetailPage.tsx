@@ -7,7 +7,14 @@ import { formatDate } from '../lib/utils'
 export function GameDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { getGameById, getRatingsForGame, getAverageScore, getMyRatingForGame, addRating, updateRating } = useGames()
+  const {
+    getGameById,
+    getRatingsForGame,
+    getAverageScore,
+    getMyRatingForGame,
+    addRating,
+    updateRating,
+  } = useGames()
   const [score, setScore] = useState(0)
   const [comment, setComment] = useState('')
   const [showForm, setShowForm] = useState(false)
@@ -97,7 +104,7 @@ export function GameDetailPage() {
               {game.platform.join(' · ')}
             </p>
           )}
-          <div className="mt-4 flex items-center gap-4">
+          <div className="mt-4 flex flex-wrap items-center gap-4">
             {averageScore != null && (
               <span className="flex items-center gap-2">
                 <StarRatingDisplay score={averageScore} />
@@ -111,6 +118,21 @@ export function GameDetailPage() {
             )}
             {averageScore == null && (
               <span className="text-cp-muted">Sin valoraciones aún</span>
+            )}
+            {game.steamScore != null && (
+              <span className="flex items-center gap-2 rounded-full border border-cp-surface bg-cp-dark/70 px-3 py-1 text-sm">
+                <span className="font-semibold text-cp-light">
+                  Steam
+                </span>
+                <span className="text-cp-neon">
+                  {game.steamScore}/100
+                </span>
+                {game.steamReviewsCount != null && (
+                  <span className="text-xs text-cp-muted">
+                    · basado en {game.steamReviewsCount.toLocaleString()} reseñas
+                  </span>
+                )}
+              </span>
             )}
           </div>
           {game.description && (

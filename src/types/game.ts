@@ -5,6 +5,10 @@ export interface Game {
   coverImage?: string
   platform?: string[]
   description?: string
+  /** Puntuación media de Steam (0–100), si está disponible. */
+  steamScore?: number
+  /** Número aproximado de reseñas en Steam asociadas a la puntuación. */
+  steamReviewsCount?: number
   addedAt: string
 }
 

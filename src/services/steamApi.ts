@@ -32,6 +32,10 @@ interface SteamAppDetailsData {
   header_image?: string
   release_date?: SteamAppDetailsRelease
   platforms?: SteamAppDetailsPlatforms
+  /** Campo metacritic.score de la Store API (0–100). */
+  metacritic?: { score?: number }
+  /** Campo recommendations.total de la Store API (número de reseñas). */
+  recommendations?: { total?: number }
 }
 
 interface SteamAppDetailsResponse {
@@ -140,6 +144,9 @@ export function steamAppDetailsToGame(
       ? platformsFromSteam(data.platforms)
       : undefined,
     description: data.short_description ?? undefined,
+    steamScore: typeof data.metacritic?.score === 'number' ? data.metacritic.score : undefined,
+    steamReviewsCount:
+      typeof data.recommendations?.total === 'number' ? data.recommendations.total : undefined,
     addedAt: new Date().toISOString(),
   }
 }

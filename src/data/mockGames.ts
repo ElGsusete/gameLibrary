@@ -8,6 +8,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbf.png',
     platform: ['Nintendo Switch', 'Wii U'],
     description: 'Explora un vasto reino en esta aventura de acción de Nintendo.',
+    steamScore: 97,
+    steamReviewsCount: 250000,
     addedAt: '2024-01-15T10:00:00Z',
   },
   {
@@ -17,6 +19,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co4j1r.png',
     platform: ['PC', 'PlayStation', 'Xbox'],
     description: 'Un RPG de acción en mundo abierto de FromSoftware.',
+    steamScore: 94,
+    steamReviewsCount: 500000,
     addedAt: '2024-02-01T12:00:00Z',
   },
   {
@@ -26,6 +30,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lzt.png',
     platform: ['PC', 'Nintendo Switch', 'PlayStation', 'Xbox'],
     description: 'Roguelike de Supergiant con combate y narrativa excelentes.',
+    steamScore: 93,
+    steamReviewsCount: 150000,
     addedAt: '2024-02-10T09:00:00Z',
   },
   {
@@ -35,6 +41,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1ulj.png',
     platform: ['PC', 'Nintendo Switch', 'PlayStation', 'Xbox'],
     description: 'Plataformas pixel art con historia sobre superación personal.',
+    steamScore: 95,
+    steamReviewsCount: 80000,
     addedAt: '2024-01-20T14:00:00Z',
   },
   {
@@ -44,6 +52,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lco.png',
     platform: ['PC', 'Nintendo Switch', 'PlayStation', 'Xbox'],
     description: 'Metroidvania con arte y mundo memorables.',
+    steamScore: 96,
+    steamReviewsCount: 200000,
     addedAt: '2024-01-25T11:00:00Z',
   },
   {
@@ -53,6 +63,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lhm.png',
     platform: ['PC', 'Nintendo Switch', 'PlayStation', 'Xbox'],
     description: 'RPG narrativo sin combate tradicional. Detective en estado crítico.',
+    steamScore: 92,
+    steamReviewsCount: 60000,
     addedAt: '2024-02-05T16:00:00Z',
   },
   {
@@ -62,6 +74,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lcz.png',
     platform: ['PC', 'PlayStation', 'Xbox'],
     description: 'Puzles con portales y una campaña cooperativa memorable.',
+    steamScore: 98,
+    steamReviewsCount: 300000,
     addedAt: '2024-01-08T08:00:00Z',
   },
   {
@@ -71,6 +85,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbo.png',
     platform: ['PC', 'Nintendo Switch', 'PlayStation', 'Xbox', 'Mobile'],
     description: 'Granja, relaciones y exploración en pixel art.',
+    steamScore: 98,
+    steamReviewsCount: 400000,
     addedAt: '2024-02-12T13:00:00Z',
   },
   {
@@ -80,6 +96,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lcp.png',
     platform: ['PlayStation', 'PC'],
     description: 'Kratos y Atreus en una aventura nórdica.',
+    steamScore: 93,
+    steamReviewsCount: 120000,
     addedAt: '2024-01-30T10:30:00Z',
   },
   {
@@ -89,6 +107,8 @@ export const mockGames: Game[] = [
     coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lhn.png',
     platform: ['PC', 'PlayStation', 'Xbox', 'Nintendo Switch'],
     description: 'Exploración espacial y misterio en un sistema solar que se repite.',
+    steamScore: 95,
+    steamReviewsCount: 70000,
     addedAt: '2024-02-15T17:00:00Z',
   },
 ]

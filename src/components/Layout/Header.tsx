@@ -258,6 +258,20 @@ export function Header() {
             <ListPlus className="h-4 w-4" />
             <span className="hidden sm:inline">Añadir</span>
           </Link>
+          {import.meta.env.DEV && (
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.removeItem("games-store");
+                localStorage.removeItem("ratings-store");
+                localStorage.removeItem("steam-app-list");
+                window.location.reload();
+              }}
+              className="ml-1 rounded border border-cp-surface bg-cp-dark px-2 py-1 text-xs text-cp-muted hover:border-red-500 hover:text-red-400 transition-colors"
+            >
+              Reset datos
+            </button>
+          )}
           {isLoggedIn ? (
             <button
               type="button"
