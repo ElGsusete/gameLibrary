@@ -285,11 +285,15 @@ export function Header() {
             <button
               type="button"
               onClick={login}
-              className="flex items-center gap-1.5 rounded border border-cp-neon/60 bg-cp-surface px-2 py-1.5 text-sm text-cp-neon hover:bg-cp-neon/10 transition-colors"
+              className="flex items-center gap-2 rounded-full border border-cp-neon bg-cp-neon px-2.5 py-1.5 text-sm font-medium text-cp-black shadow-md hover:bg-cp-neon/90 transition-colors"
               title="Iniciar sesión con Steam"
             >
-              <Gamepad2 className="h-4 w-4" />
-              <span className="hidden sm:inline">Steam</span>
+              <img
+                src="/steamLogo.png"
+                alt="Iniciar sesión con Steam"
+                className="h-5 w-5"
+              />
+              <span className="hidden sm:inline">Iniciar con Steam</span>
             </button>
           )}
         </nav>
@@ -380,10 +384,14 @@ export function Header() {
                     login();
                     closeMobileMenu();
                   }}
-                  className="flex w-full items-center gap-3 rounded-lg border border-cp-neon/60 bg-cp-surface px-3 py-2.5 text-left text-cp-neon hover:bg-cp-neon/10 transition-colors"
+                  className="flex w-full items-center gap-3 rounded-lg border border-cp-neon bg-cp-neon px-3 py-2.5 text-left font-medium text-cp-black shadow-md hover:bg-cp-neon/90 transition-colors"
                 >
-                  <Gamepad2 className="h-5 w-5 shrink-0" />
-                  Iniciar sesión con Steam
+                  <img
+                    src="/steamLogo.png"
+                    alt="Iniciar sesión con Steam"
+                    className="h-5 w-5"
+                  />
+                  <span>Iniciar sesión con Steam</span>
                 </button>
               )}
             </li>

@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
 import { GameList } from '../components/GameList'
 
@@ -6,7 +7,24 @@ const MIN_REVIEWS_OPTIONS = [0, 1, 2, 3, 4, 5, 10] as const
 
 export function TopGamesPage() {
   const { gamesWithScores } = useGames()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [minReviews, setMinReviews] = useState<number>(0)
+
+  useEffect(() => {
+    const param = searchParams.get('minReviews')
+    const value = param != null ? Number(param) : 0
+    setMinReviews(Number.isNaN(value) ? 0 : value)
+  }, [searchParams])
+
+  const updateMinReviews = (value: number) => {
+    setMinReviews(value)
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
+      if (value > 0) next.set('minReviews', String(value))
+      else next.delete('minReviews')
+      return next
+    }, { replace: true })
+  }
 
   const filteredAndSorted = useMemo(() => {
     let list = gamesWithScores.filter((g) => g.ratingCount >= minReviews)
@@ -29,23 +47,35 @@ export function TopGamesPage() {
       <h1 className="mb-6 text-center text-3xl font-bold text-cp-light">Mejores juegos</h1>
 
       <div className="mb-6 flex flex-wrap items-center gap-4">
-        <div>
-          <label htmlFor="min-reviews" className="mr-2 text-sm text-cp-muted">
-            Mínimo de valoraciones:
-          </label>
-          <select
-            id="min-reviews"
-            value={minReviews}
-            onChange={(e) => setMinReviews(Number(e.target.value))}
-            className="rounded border border-cp-surface bg-cp-dark px-3 py-1.5 text-cp-light focus:border-cp-neon focus:outline-none"
-          >
-            <option value={0}>Todos</option>
+        <div className="flex flex-col gap-1">
+          <span className="mr-2 text-sm text-cp-muted">Mínimo de valoraciones:</span>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => updateMinReviews(0)}
+              className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                minReviews === 0
+                  ? 'border-cp-neon bg-cp-neon text-cp-black'
+                  : 'border-cp-surface bg-cp-dark text-cp-muted hover:border-cp-neon hover:text-cp-light'
+              }`}
+            >
+              Todos
+            </button>
             {MIN_REVIEWS_OPTIONS.filter((n) => n > 0).map((n) => (
-              <option key={n} value={n}>
+              <button
+                key={n}
+                type="button"
+                onClick={() => updateMinReviews(n)}
+                className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                  minReviews === n
+                    ? 'border-cp-neon bg-cp-neon text-cp-black'
+                    : 'border-cp-surface bg-cp-dark text-cp-muted hover:border-cp-neon hover:text-cp-light'
+                }`}
+              >
                 Al menos {n}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 
@@ -60,6 +61,7 @@ export function MySteamGamesPage() {
   const [games, setGames] = useState<SteamOwnedGame[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
   const [nameFilter, setNameFilter] = useState('')
 
   useEffect(() => {
@@ -85,6 +87,11 @@ export function MySteamGamesPage() {
       })
       .finally(() => setLoading(false))
   }, [token, isLoggedIn])
+
+  useEffect(() => {
+    const initialQ = searchParams.get('q') ?? ''
+    setNameFilter(initialQ)
+  }, [searchParams])
 
   if (!isLoggedIn) {
     return (
@@ -133,7 +140,16 @@ export function MySteamGamesPage() {
               id="steam-name-search"
               type="text"
               value={nameFilter}
-              onChange={(e) => setNameFilter(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+                setNameFilter(value)
+                setSearchParams((prev) => {
+                  const next = new URLSearchParams(prev)
+                  if (value.trim()) next.set('q', value)
+                  else next.delete('q')
+                  return next
+                }, { replace: true })
+              }}
               placeholder="Buscar por nombre…"
               className="w-full max-w-md rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
             />
