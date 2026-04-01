@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   Gamepad2,
   Home,
@@ -132,17 +132,18 @@ export function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-cp-surface bg-cp-dark/98 backdrop-blur"
+      className="sticky top-0 z-50 border-b border-cp-border bg-cp-dark/98 backdrop-blur"
       ref={mobileMenuRef}
     >
-      <div className="relative flex h-14 w-full items-center gap-2 px-4">
+      <div className="relative flex h-16 w-full items-center gap-2 px-4">
         {/* Logo */}
         <Link
           to="/"
-          className="flex shrink-0 items-center gap-2 text-lg font-semibold text-cp-light hover:text-cp-neon transition-colors"
+          className="flex shrink-0 items-center gap-2 text-lg font-bold text-cp-light hover:text-cp-neon transition-colors"
         >
-          <Gamepad2 className="h-6 w-6" />
+          <Gamepad2 className="h-7 w-7" />
           <span className="hidden sm:inline">GameLog</span>
+          <span className="hidden sm:inline h-1.5 w-1.5 rounded-full bg-cp-neon" aria-hidden />
         </Link>
 
         {/* Contenedor búsqueda (móvil: barra con menú; desktop: centrado) */}
@@ -178,10 +179,10 @@ export function Header() {
           {/* Desktop: solo búsqueda */}
           <div className="relative hidden w-full md:block">
             <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-cp-muted" />
+              <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-cp-muted pointer-events-none" />
               <input
                 {...searchInputCommonProps}
-                className="w-full rounded-lg border border-cp-surface bg-cp-dark py-1.5 pl-8 pr-3 text-sm text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
+                className="w-full rounded-lg border border-cp-border bg-cp-dark py-1.5 pl-8 pr-3 text-sm text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon/40 focus:shadow-[0_0_12px_rgba(16,185,129,0.1)] transition-all"
               />
             </div>
           </div>
@@ -207,6 +208,7 @@ export function Header() {
                 className={`h-4 w-4 transition-transform duration-200 ease-out ${showGamesMenu ? "rotate-180" : ""}`}
               />
             </button>
+
             {showGamesMenu && (
               <ul
                 className={`absolute right-0 top-full z-50 mt-1 min-w-[200px] origin-top-right rounded-lg border border-cp-surface bg-cp-dark py-1 shadow-xl transition-all duration-200 ease-out ${
@@ -251,13 +253,22 @@ export function Header() {
             )}
           </div>
 
-          <Link
+          <NavLink
             to="/add-game"
-            className="flex items-center gap-1.5 text-sm text-cp-neon hover:text-cp-neon/80 transition-colors"
+            className={({ isActive }) =>
+              `relative flex items-center gap-1.5 text-sm transition-colors ${isActive ? "text-cp-neon" : "text-cp-muted hover:text-cp-neon"}`
+            }
           >
-            <ListPlus className="h-4 w-4" />
-            <span className="hidden sm:inline">Añadir</span>
-          </Link>
+            {({ isActive }) => (
+              <>
+                <ListPlus className="h-4 w-4" />
+                <span className="hidden sm:inline">Añadir</span>
+                {isActive && (
+                  <span className="absolute -bottom-[21px] left-0 right-0 h-0.5 rounded-full bg-cp-neon" aria-hidden />
+                )}
+              </>
+            )}
+          </NavLink>
           {import.meta.env.DEV && (
             <button
               type="button"

@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { ArrowRight } from 'lucide-react'
 
 const currentYear = new Date().getFullYear() + 1
 const addGameSchema = z.object({
@@ -40,6 +41,10 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
     },
   })
 
+  const inputClass =
+    "w-full rounded-lg border border-cp-border bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon/40 focus:shadow-[0_0_8px_rgba(16,185,129,0.08)] transition-all"
+  const labelClass = "mb-1.5 block text-xs font-medium uppercase tracking-widest text-cp-muted"
+
   return (
     <form
       onSubmit={handleSubmit((data) => {
@@ -48,16 +53,16 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
           : undefined
         onSubmit({ ...data, platform: platforms })
       })}
-      className="mx-auto w-full max-w-2xl space-y-4"
+      className="mx-auto w-full max-w-2xl space-y-5"
     >
       <div>
-        <label htmlFor="title" className="mb-1 block text-sm font-medium text-cp-light">
+        <label htmlFor="title" className={labelClass}>
           Título *
         </label>
         <input
           id="title"
           {...register('title')}
-          className="w-full rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
+          className={inputClass}
           placeholder="Nombre del juego"
         />
         {errors.title && (
@@ -66,14 +71,14 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
       </div>
 
       <div>
-        <label htmlFor="year" className="mb-1 block text-sm font-medium text-cp-light">
+        <label htmlFor="year" className={labelClass}>
           Año
         </label>
         <input
           id="year"
           type="number"
           {...register('year')}
-          className="w-full rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
+          className={inputClass}
           placeholder="2020"
         />
         {errors.year && (
@@ -82,14 +87,14 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
       </div>
 
       <div>
-        <label htmlFor="coverImage" className="mb-1 block text-sm font-medium text-cp-light">
+        <label htmlFor="coverImage" className={labelClass}>
           URL de la portada
         </label>
         <input
           id="coverImage"
           type="url"
           {...register('coverImage')}
-          className="w-full rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
+          className={inputClass}
           placeholder="https://..."
         />
         {errors.coverImage && (
@@ -98,35 +103,36 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
       </div>
 
       <div>
-        <label htmlFor="platform" className="mb-1 block text-sm font-medium text-cp-light">
+        <label htmlFor="platform" className={labelClass}>
           Plataformas (separadas por comas)
         </label>
         <input
           id="platform"
           {...register('platform')}
-          className="w-full rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
+          className={inputClass}
           placeholder="PC, PlayStation, Nintendo Switch"
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="mb-1 block text-sm font-medium text-cp-light">
+        <label htmlFor="description" className={labelClass}>
           Descripción
         </label>
         <textarea
           id="description"
           rows={4}
           {...register('description')}
-          className="w-full rounded-lg border border-cp-surface bg-cp-dark px-3 py-2 text-cp-light placeholder-cp-muted focus:border-cp-neon focus:outline-none focus:ring-1 focus:ring-cp-neon"
+          className={inputClass}
           placeholder="Breve descripción del juego..."
         />
       </div>
 
       <button
         type="submit"
-        className="w-full rounded-lg border border-cp-neon bg-cp-neon px-4 py-2 font-medium text-cp-black hover:bg-cp-neon/90 focus:outline-none focus:ring-2 focus:ring-cp-neon focus:ring-offset-2 focus:ring-offset-cp-black transition-colors"
+        className="flex w-full items-center justify-center gap-2 rounded-lg border border-cp-neon bg-cp-neon px-4 py-2.5 font-semibold text-cp-black hover:bg-cp-neon-dim focus:outline-none focus:ring-2 focus:ring-cp-neon focus:ring-offset-2 focus:ring-offset-cp-black transition-colors"
       >
         Añadir juego
+        <ArrowRight className="h-4 w-4" aria-hidden />
       </button>
     </form>
   )

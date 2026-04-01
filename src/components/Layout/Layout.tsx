@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useSearchParams } from "react-router-dom";
-import { Github } from "lucide-react";
+import { Github, Gamepad2 } from "lucide-react";
 import { Header } from "./Header";
 
 const BANNER_WIDTH = "w-[160px]";
@@ -151,17 +151,28 @@ export function Layout() {
           <SideBanner side="right" />
         </div>
       </main>
-      <footer className="border-t border-cp-surface py-4 text-center text-sm text-cp-muted">
-        <span className="block mb-2">GameLog — Tu lista de juegos. Los datos no son reales.</span>
-        <a
-          href="https://github.com/ElGsusete/gameLibrary"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-md border border-cp-surface bg-cp-dark px-3 py-1.5 text-cp-muted hover:text-cp-neon hover:border-cp-neon/50 transition-colors"
-        >
-          <Github className="h-4 w-4" aria-hidden />
-          Ver en GitHub
-        </a>
+      <footer className="relative border-t border-cp-border py-6 text-center text-sm text-cp-muted">
+        {/* Top gradient separator */}
+        <div
+          className="absolute inset-x-0 -top-px h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(16,185,129,0.2), transparent)' }}
+          aria-hidden
+        />
+        <div className="mx-auto max-w-4xl px-4 flex flex-col items-center gap-3">
+          <span className="flex items-center gap-2 text-cp-muted">
+            <Gamepad2 className="h-4 w-4 text-cp-neon" aria-hidden />
+            GameLog — Tu lista de juegos. Los datos no son reales.
+          </span>
+          <a
+            href="https://github.com/ElGsusete/gameLibrary"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg border border-cp-border bg-cp-dark px-4 py-2 text-cp-muted hover:text-cp-neon hover:border-cp-neon/50 transition-colors"
+          >
+            <Github className="h-4 w-4" aria-hidden />
+            ElGsusete/gameLibrary
+          </a>
+        </div>
       </footer>
     </div>
   );
