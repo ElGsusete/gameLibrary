@@ -29,7 +29,7 @@ Construido con **React**, **TypeScript** y **Vite**. Los datos se guardan en **l
 ## Tecnologías
 
 - React 19, TypeScript, Vite
-- React Router, Zustand
+- React Router
 - React Hook Form + Zod
 - Tailwind CSS, Lucide React
 - ESLint + TypeScript ESLint
@@ -47,7 +47,7 @@ npm run test        # modo watch
 npm run test:run    # una sola ejecución
 ```
 
-Incluyen: utilidades (`src/lib/utils`), componentes React (p. ej. `GameCard`), y rutas del API en `server/` (auth, `/api/me/games`) con Supertest. Los tests del frontend usan React Testing Library y jsdom; los del servidor se ejecutan en entorno Node.
+Incluyen: utilidades (`src/lib/utils`), contextos (`GamesContext`, `AuthContext`), servicios (`steamApi`), componentes React (`GameCard`, `AddGameForm`, `StarRatingDisplay`, `StarRatingInput`) y rutas del API en `server/` (auth, `/api/me/games`) con Supertest. Los tests del frontend usan React Testing Library y jsdom; los del servidor se ejecutan en entorno Node.
 
 **Tests E2E (Playwright):**
 

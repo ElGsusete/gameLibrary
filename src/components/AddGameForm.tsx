@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const currentYear = new Date().getFullYear() + 1
@@ -27,9 +28,9 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
-  } = useForm<AddGameFormValues>({
+  } = useForm<AddGameFormValues, unknown, z.infer<typeof addGameSchema>>({
+    resolver: zodResolver(addGameSchema),
     defaultValues: {
       title: '',
       year: '',
@@ -42,18 +43,10 @@ export function AddGameForm({ onSubmit }: AddGameFormProps) {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        const parsed = addGameSchema.safeParse(data)
-        if (!parsed.success) {
-          const flat = parsed.error.flatten().fieldErrors
-          if (flat.title) setError('title', { message: flat.title[0] })
-          if (flat.year) setError('year', { message: flat.year[0] })
-          if (flat.coverImage) setError('coverImage', { message: flat.coverImage[0] })
-          return
-        }
         const platforms = data.platform
           ? data.platform.split(',').map((p) => p.trim()).filter(Boolean)
           : undefined
-        onSubmit({ ...parsed.data, platform: platforms })
+        onSubmit({ ...data, platform: platforms })
       })}
       className="mx-auto w-full max-w-2xl space-y-4"
     >
