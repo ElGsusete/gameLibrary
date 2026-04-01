@@ -34,3 +34,4 @@ server/.env
 playwright-report/
 test-results/
 .blob
+.dual-graph/
